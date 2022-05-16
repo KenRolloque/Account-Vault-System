@@ -3,6 +3,7 @@ from PIL import ImageTk, Image
 
 import mysql.connector as mysql
 import tkinter.messagebox as MessageBox
+from sqlconnect import *
 
 ADDLABEL = ("Arial", 9 , "bold")
 ENTRYFONT = ("Cambria", 9)
@@ -26,21 +27,13 @@ class Admin:
         self.crButton()
 
     def crLogo(self):
-        self.logoImage = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/logo.png")
+        self.logoImage = Image.open("Image/logo.png")
         self.logo = ImageTk.PhotoImage(self.logoImage)
         myLogo = tk.Label(self.window, image = self.logo, borderwidth = 0, highlightthickness = 0, bg ="#032139")
         myLogo.place(x = 80 , y = 30)
 
     def crEntry(self):
-
-        connect = mysql.connect(
-                    host = "localhost", 
-                    username = "root",
-                    port ="3306", 
-                    password="", 
-                    database = "accountstorage",
-                
-                    )
+        connect = connection()
         cursor = connect.cursor()
         sql = "SELECT * FROM info"
         cursor.execute(sql) 
@@ -117,14 +110,8 @@ class Admin:
             MessageBox.showerror("Erorr","Invalid Password")
 
         else:
-            connect = mysql.connect(
-                        host = "localhost", 
-                        username = "root",
-                        port ="3306", 
-                        password="", 
-                        database = "accountstorage",
-                
-                        )
+            
+            connect = connection()
             cursor = connect.cursor()
             sql = "SELECT * FROM info"
             cursor.execute(sql) 
@@ -154,14 +141,8 @@ class Admin:
             
 
         else:
-            connect = mysql.connect(
-                            host = "localhost", 
-                            username = "root",
-                            port ="3306", 
-                            password="", 
-                            database = "accountstorage",
-                
-                            )
+            
+            connect = connection()
             cursor = connect.cursor()
             sql = "UPDATE info SET username = %s, password = %s "
        

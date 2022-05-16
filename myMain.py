@@ -3,6 +3,7 @@ import mysql.connector as mysql
 import tkinter.messagebox as MessageBox
 from tkinter import ttk
 from PIL import ImageTk, Image
+from sqlconnect import *
 
 import adminInformation
 import actionClass 
@@ -21,6 +22,7 @@ ENTRYFONT = ("Arial", 9 )
 ADMINFONT = ("Sitka Text", 10, "bold")
 SQUARELABEL = ("Verdana", 10, "bold")
 COUNTLABEL = ("Verdana", 36, "bold")
+
 class Interface:    
 
     def __init__ (self):
@@ -39,8 +41,8 @@ class Interface:
         self.stringVar_gameAcc = tk.StringVar()
         self.stringVar_bank = tk.StringVar()
         self.stringVar_soc = tk.StringVar()
-        self.logoImage = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/logo.png")
-        self.adminImage = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/admin.png")
+        self.logoImage = Image.open("Image/logo.png")
+        self.adminImage = Image.open("Image/admin.png")
         self.logo = ImageTk.PhotoImage(self.logoImage)
         self.admin = ImageTk.PhotoImage(self.adminImage)
 
@@ -189,14 +191,7 @@ class Interface:
         adminIcon.image = self.admin
         adminIcon.place(x = 1000, y = 20)
 
-        connect = mysql.connect(
-                    host = "localhost", 
-                    username = "root",
-                    port ="3306", 
-                    password="", 
-                    database = "accountstorage",
-                
-                    )
+        connect = connection()
         cursor = connect.cursor()
         sql = "SELECT * FROM info"
         cursor.execute(sql) 
@@ -284,15 +279,7 @@ class Interface:
 
 
             else:
-
-                connect = mysql.connect(
-                host = "localhost", 
-                username = "root",
-                port ="3306", 
-                password="", 
-                database = "accountstorage",
-                )
-                
+                connect = connection()
                 cursor = connect.cursor()
                 #cursor.execute("INSERT INTO example (name,email,phone,password,type) VALUES('"+info1+"','"+info2+"','"+info3+"','"+info4+"','"+info5+"')")
                 #
@@ -319,14 +306,7 @@ class Interface:
                 self.createCount_sqr()
 
     def displayData(self):
-        connect = mysql.connect(
-                host = "localhost", 
-                username = "root",
-                port ="3306", 
-                password="", 
-                database = "accountstorage",
-                
-                )
+        connect = connection()
         cursor = connect.cursor()
         sql = "SELECT * FROM table1 ORDER BY type"
         cursor.execute(sql) 
@@ -355,14 +335,7 @@ class Interface:
         connect.close()
 
     def findTotal_acc(self):
-        connect = mysql.connect(
-                host = "localhost", 
-                username = "root",
-                port ="3306", 
-                password="", 
-                database = "accountstorage",
-                
-                )
+        connect = connection()
         cursor = connect.cursor()
         sql = "SELECT * FROM table1"
         cursor.execute(sql) 
@@ -372,14 +345,7 @@ class Interface:
         #return self.stringVar_totalAcc
 
     def findGame_acc(self):
-        connect = mysql.connect(
-                host = "localhost", 
-                username = "root",
-                port ="3306", 
-                password="", 
-                database = "accountstorage",
-                
-                )
+        connect = connection()
         cursor = connect.cursor()
         sql = "SELECT * FROM table1 WHERE type ='Game Account'"
         cursor.execute(sql)
@@ -390,14 +356,7 @@ class Interface:
         #return count
 
     def findBank_acc(self):
-        connect = mysql.connect(
-                host = "localhost", 
-                username = "root",
-                port ="3306", 
-                password="", 
-                database = "accountstorage",
-                
-                )
+        connect = connection()
         cursor = connect.cursor()
         sql = "SELECT * FROM table1 WHERE type ='Online/Bank Account'"
         cursor.execute(sql)
@@ -406,14 +365,7 @@ class Interface:
         connect.commit()
 
     def findSoc_acc(self):
-        connect = mysql.connect(
-                host = "localhost", 
-                username = "root",
-                port ="3306", 
-                password="", 
-                database = "accountstorage",
-                
-                )
+        connect = connection()
         cursor = connect.cursor()
         sql = "SELECT * FROM table1 WHERE type ='Social Media Account'"
         cursor.execute(sql)
@@ -422,7 +374,6 @@ class Interface:
         connect.commit()
 
     def createTable_container(self): # Table Container
-
         tableContaier = tk.Frame(self.displayContent, height = 350, width = 1000, bg ="#001221")
         tableContaier.place(x = 50, y = 320 )
         return tableContaier
@@ -535,14 +486,8 @@ class Interface:
     def delete(self):
 
         try:
-            connect = mysql.connect(
-                    host = "localhost", 
-                    username = "root",
-                    port ="3306", 
-                    password="", 
-                    database = "accountstorage",
-                
-                    )
+            
+            connect = connection()
             cursor = connect.cursor()
             self.selectedItem = self.table.selection()[0]
             self.uid = self.table.item(self.selectedItem)['values'][0]
@@ -556,7 +501,6 @@ class Interface:
             self.refresh()
 
         except Exception as e:
-
             MessageBox.showerror("Delete Error","Select an Item First")
 
     def clear(self):
@@ -567,7 +511,6 @@ class Interface:
         self.phoneEntry.delete(0, 'end')
 
     def refresh(self):
-
         self.displayData()
         self.findBank_acc()
         self.findGame_acc()
@@ -576,20 +519,14 @@ class Interface:
         self.createCount_sqr()
         self.createAdmin()
         self.y = 0
+        
     def accessAdmin(self):
-
         if self.y < 1:
             self.x = adminInformation.Admin()
             self.y +=1
 
-        
-
-    def run(self):
-       
+    def run(self):   
         self.window.mainloop()
-
-   
-
 
 if __name__ == "__main__":
 
