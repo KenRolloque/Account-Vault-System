@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import mysql.connector as mysql
 import tkinter.messagebox as MessageBox
+from sqlconnect import *
 
 import myMain
 
@@ -17,32 +18,32 @@ class LogIn:
         self.window = tk.Tk()
         self.window.geometry("930x600")
         self.window.resizable(False,False)
-        self.logoImage = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/logo.png")
+        self.logoImage = Image.open("Image/logo.png")
         self.logo = ImageTk.PhotoImage(self.logoImage)
 
-        self.fbLogo = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/fbedit.png")
+        self.fbLogo = Image.open("Image/fbedit.png")
         self.myfb = ImageTk.PhotoImage(self.fbLogo)
 
-        self.dotaLogo = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/dotaedit.png")
+        self.dotaLogo = Image.open("Image/dotaedit.png")
         self.mydota = ImageTk.PhotoImage(self.dotaLogo)
 
-        self.googleLogo = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/gedit.png")
+        self.googleLogo = Image.open("Image/gedit.png")
         self.myGoogle = ImageTk.PhotoImage(self.googleLogo)
 
-        self.codLogo = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/codmedit.png")
+        self.codLogo = Image.open("Image/codmedit.png")
         self.myCod= ImageTk.PhotoImage(self.codLogo)
         
         
-        self.instaLogo = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/insta.png")
+        self.instaLogo = Image.open("Image/insta.png")
         self.myInsta= ImageTk.PhotoImage(self.instaLogo)
 
-        self.mlLogo = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/mb.png")
+        self.mlLogo = Image.open("Image/mb.png")
         self.myML= ImageTk.PhotoImage(self.mlLogo)
 
-        self.lbLogo = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/lb.png")
+        self.lbLogo = Image.open("Image/lb.png")
         self.myLb= ImageTk.PhotoImage(self.lbLogo)
 
-        self.idLogo = Image.open("D:/Administrator/Python Code/Class/Account Storage/Image/id.png")
+        self.idLogo = Image.open("Image/id.png")
         self.myId= ImageTk.PhotoImage(self.idLogo)
 
         self.myrightFrame = self.createRight_Frame()
@@ -136,14 +137,7 @@ class LogIn:
             self.invalid()
         
         else:
-            connect = mysql.connect(
-                    host = "localhost", 
-                    username = "root",
-                    port ="3306", 
-                    password="", 
-                    database = "accountstorage",
-                
-                    )
+            connect = connection()
             cursor = connect.cursor()
             sql = "SELECT * FROM info"
             cursor.execute(sql) 
