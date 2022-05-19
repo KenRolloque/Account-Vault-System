@@ -1,6 +1,8 @@
 import mysql.connector as mysql
 import tkinter.messagebox as MessageBox
 import tkinter as tk
+from sqlconnect import *
+
 
 import myMain
 
@@ -8,13 +10,8 @@ class dataBase:
 
     def __init__(self,getName = 0 ,getEmail = 0,getPhone = 0,getPass = 0, getType= 0):
 
-        self.connect = mysql.connect(
-            host = "localhost", 
-            username = "root",
-            port ="3306", 
-            password="", 
-            database = "accountstorage"
-            )
+        self.connect = connection()
+
         self.getName = getName
         self.getEmail = getEmail
         self.getPhone = getPhone
