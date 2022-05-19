@@ -3,6 +3,7 @@ from tkinter import ttk
 import tkinter.messagebox as MessageBox
 import mysql.connector as mysql
 import myMain
+from sqlconnect import *
 
 addPanelBG = "#032139"
 contentPanelBG = "#002645"
@@ -169,30 +170,24 @@ class Action:
         
         else:
 
-            connect = mysql.connect(
-                    host = "localhost", 
-                    username = "root",
-                    port ="3306", 
-                    password="", 
-                    database = "accountstorage",
-                
-                    )
+            connect = connection()
             cursor = connect.cursor()
             sql = "UPDATE table1 SET account = %s,accountname = %s,email = %s,password = %s,contact = %s,type = %s WHERE id = %s"
             val = (updateAcc,updateName,updateEmail,updatePass,updatePhone,updateType,updateID)
             cursor.execute(sql,val)
             #print (updateType,"1")
             print(self.type,"1")
+            
             connect.commit()
             connect.close()
 
             self.quit()
-            
-            #myInstance = myMain();
+
+            MessageBox.showinfo("Data Updated","Data Updated Successfully")
 
            # self.myInstance.createTable();
             #self.myInstance.displayData()
-           # myObj.displayData()
+            # myObj.displayData()
   
     def quit(self):
         self.window.destroy()      

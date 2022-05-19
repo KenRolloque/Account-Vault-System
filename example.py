@@ -16,13 +16,7 @@ def insert():
         MessageBox.showinfo("Inser Status","Complete the following form")
 
     else:
-            connect = mysql.connect(
-            host = "localhost", 
-            username = "root",
-            port ="3306", 
-            password="", 
-            database = "accountstorage"
-            )
+            connect = connection()
 
             cursor = connect.cursor()
             cursor.execute("INSERT INTO example (name,email,phone,password,type) VALUES('"+info1+"','"+info2+"','"+info3+"','"+info4+"','"+info5+"')")
